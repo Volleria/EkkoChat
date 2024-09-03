@@ -4,8 +4,9 @@
 #include <QDialog>
 #include "global.h"
 
-namespace Ui {
-class ResetDialog;
+namespace Ui
+{
+    class ResetDialog;
 }
 
 class ResetDialog : public QDialog
@@ -18,18 +19,16 @@ public:
 
 private slots:
     void on_return_btn_clicked();
-
-    void on_varify_btn_clicked();
-
-    void slot_reset_mod_finish(ReqId id, QString res, ErrorCodes err);
+    void on_verify_btn_clicked();
     void on_sure_btn_clicked();
+    void slot_reset_mod_finish(ReqId id, QString res, ErrorCodes err);
 
 private:
     bool checkUserValid();
     bool checkPassValid();
     void showTip(QString str,bool b_ok);
     bool checkEmailValid();
-    bool checkVarifyValid();
+    bool checkVerifyValid();
     void AddTipErr(TipErr te,QString tips);
     void DelTipErr(TipErr te);
     void initHandlers();

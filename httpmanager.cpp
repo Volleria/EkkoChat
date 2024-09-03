@@ -47,6 +47,10 @@ void HttpManager::slot_http_finish(ReqId id, QString res, ErrorCodes err, Module
     {
         // 发送信号通知指定模块 http 的响应结束了
         emit sig_reg_mod_finish(id, res, err);
+    }
 
+    if(mod == Modules::RESETMOD)
+    {
+        emit sig_reset_mod_finish(id,res,err);
     }
 }

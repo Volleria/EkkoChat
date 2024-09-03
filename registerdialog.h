@@ -18,10 +18,11 @@ public:
 
 private slots:
     void on_getCode_btn_clicked();
-    void slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err);
     void on_sure_btn_clicked();
-
     void on_return_btn_clicked();
+    void on_cancel_btn_clicked();
+
+    void slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err);
 
 private:
     void initHttpHandlers();
@@ -35,6 +36,7 @@ private:
     void AddTipErr(TipErr te,QString tips);
     void DelTipErr(TipErr re);
     void ChangeTipPage();
+
     Ui::RegisterDialog *ui;
     QMap<ReqId, std::function<void(const QJsonObject& )>> _handlers;
     QMap<TipErr,QString> _tip_errs;
