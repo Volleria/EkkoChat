@@ -63,7 +63,8 @@ void MainWindow::SlotSwitchLogin()
 
 void MainWindow::SlotSwitchReset()
 {
-    _reset_
+    _reset_dialog = new ResetDialog(this);
+    _reset_dialog->setWindowFlags(QT::Cus)
 
 }
 

@@ -30,7 +30,7 @@ public:
 
     ~Singleton()
     {
-        std::cout << "这个单例被析构" << std::endl;
+        std::cout << "This singleton is destructed" << std::endl;
     }
 };
 

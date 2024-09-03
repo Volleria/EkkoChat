@@ -15,11 +15,12 @@ class HttpManager : public QObject, public Singleton<HttpManager>, public std::e
     Q_OBJECT
 public:
     ~HttpManager();
+    void PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod);
 private:
     friend class Singleton<HttpManager>;
     HttpManager();
     QNetworkAccessManager _manager;
-    void PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod);
+
 
 private slots:
     void slot_http_finish(ReqId id, QString res, ErrorCodes err, Modules mod);
