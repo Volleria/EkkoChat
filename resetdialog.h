@@ -24,7 +24,6 @@ private slots:
     void slot_reset_mod_finish(ReqId id, QString res, ErrorCodes err);
 
 private:
-    bool checkUserValid();
     bool checkPassValid();
     void showTip(QString str,bool b_ok);
     bool checkEmailValid();

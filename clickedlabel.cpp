@@ -19,7 +19,7 @@ void ClickedLabel::mousePressEvent(QMouseEvent *ev)
         if(_curstate == ClickLabelState::Normal)
         {
             _curstate = ClickLabelState::Selected;
-            setProperty("state",_selected_hover);
+            setProperty("state",_select_hover);
             repolish(this);
             update();
         }
@@ -47,7 +47,7 @@ void ClickedLabel::enterEvent(QEvent* event)
     }
     else
     {
-        setProperty("state",_selected_hover);
+        setProperty("state",_select_hover);
         repolish(this);
         update();
     }
@@ -65,7 +65,7 @@ void ClickedLabel::leaveEvent(QEvent* event)
     }
     else
     {
-        setProperty("state",_selected);
+        setProperty("state",_select);
         repolish(this);
         update();
     }
@@ -73,16 +73,18 @@ void ClickedLabel::leaveEvent(QEvent* event)
 }
 
 
-void ClickedLabel::SetState(QString normal, QString hover, QString press, QString select, QString select_hover, QString select_press)
+void ClickedLabel::SetState(QString normal, QString normal_hover, QString normal_press,
+                            QString select, QString select_hover, QString select_press)
 {
     _normal = normal;
-    _normal_hover = hover;
-    _normal_press = press;
-    _selected = select;
-    _selected_hover = select_hover;
-    _selected_press = select_press;
+    _normal_hover = normal_hover;
+    _normal_press = normal_press;
 
-    setProperty("state",normal);
+    _select = select;
+    _select_hover = select_hover;
+    _select_press = select_press;
+
+    setProperty("state",_normal);
     repolish(this);
 }
 

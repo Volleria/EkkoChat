@@ -9,10 +9,6 @@ ResetDialog::ResetDialog(QWidget *parent) :QDialog(parent),ui(new Ui::ResetDialo
 {
     ui->setupUi(this);
 
-    connect(ui->user_edit,&QLineEdit::editingFinished,this,[this](){
-        checkUserValid();
-    });
-
     connect(ui->email_edit, &QLineEdit::editingFinished, this, [this](){
         checkEmailValid();
     });
@@ -20,7 +16,6 @@ ResetDialog::ResetDialog(QWidget *parent) :QDialog(parent),ui(new Ui::ResetDialo
     connect(ui->pwd_edit, &QLineEdit::editingFinished, this, [this](){
         checkPassValid();
     });
-
 
     connect(ui->verify_edit, &QLineEdit::editingFinished, this, [this](){
          checkVerifyValid();
@@ -30,7 +25,6 @@ ResetDialog::ResetDialog(QWidget *parent) :QDialog(parent),ui(new Ui::ResetDialo
     initHandlers();
     connect(HttpManager::GetInstance().get(), &HttpManager::sig_reset_mod_finish,
             this, &ResetDialog::slot_reset_mod_finish);
-
 }
 
 
@@ -57,18 +51,13 @@ void ResetDialog::on_verify_btn_clicked()
     //发送http请求获取验证码
     QJsonObject json_obj;
     json_obj["email"] = email;
-    HttpManager::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/get_varifycode"),
-                                        json_obj, ReqId::ID_GET_VARIFY_CODE, Modules::RESETMOD);
+    HttpManager::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/get_verifycode"),
+                                        json_obj, ReqId::ID_GET_VERIFY_CODE, Modules::RESETMOD);
 }
 
 void ResetDialog::on_sure_btn_clicked()
 {
-    bool valid = checkUserValid();
-    if(!valid){
-        return;
-    }
-
-    valid = checkEmailValid();
+    bool valid = checkEmailValid();
     if(!valid){
         return;
     }
@@ -85,7 +74,6 @@ void ResetDialog::on_sure_btn_clicked()
 
     //发送http重置用户请求
     QJsonObject json_obj;
-    json_obj["user"] = ui->user_edit->text();
     json_obj["email"] = ui->email_edit->text();
     json_obj["passwd"] = xorString(ui->pwd_edit->text());
     json_obj["verifycode"] = ui->verify_edit->text();
@@ -125,7 +113,7 @@ void ResetDialog::slot_reset_mod_finish(ReqId id, QString res, ErrorCodes err)
 void ResetDialog::initHandlers()
 {
     //注册获取验证码回包逻辑
-    _handlers.insert(ReqId::ID_GET_VARIFY_CODE, [this](QJsonObject jsonObj){
+    _handlers.insert(ReqId::ID_GET_VERIFY_CODE, [this](QJsonObject jsonObj){
         int error = jsonObj["error"].toInt();
 
         if(error != ErrorCodes::SUCCESS)
@@ -153,17 +141,7 @@ void ResetDialog::initHandlers()
     });
 }
 
-bool ResetDialog::checkUserValid()
-{
-    if(ui->user_edit->text() == "")
-    {
-        AddTipErr(TipErr::TIP_USER_ERR, tr("用户名不能为空"));
-        return false;
-    }
 
-    DelTipErr(TipErr::TIP_USER_ERR);
-    return true;
-}
 
 bool ResetDialog::checkPassValid()
 {

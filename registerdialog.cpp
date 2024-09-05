@@ -86,7 +86,7 @@ void RegisterDialog::on_getCode_btn_clicked()
         QJsonObject json_obj;
         json_obj["email"] = email;
         HttpManager::GetInstance()->PostHttpReq(QUrl(gate_url_prefix + "/get_verifycode"),
-                                                json_obj,ReqId::ID_GET_VARIFY_CODE,Modules::REGISTERMOD);
+                                                json_obj,ReqId::ID_GET_VERIFY_CODE,Modules::REGISTERMOD);
     }
     else
     {
@@ -127,7 +127,7 @@ void RegisterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err)
 void RegisterDialog::initHttpHandlers()
 {
     // 注册获取验证码回包的逻辑
-    _handlers.insert(ReqId::ID_GET_VARIFY_CODE, [this](const QJsonObject& jsonObj){
+    _handlers.insert(ReqId::ID_GET_VERIFY_CODE, [this](const QJsonObject& jsonObj){
         int error = jsonObj["error"].toInt();
         if(error != ErrorCodes::SUCCESS)
         {

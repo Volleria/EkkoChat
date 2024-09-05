@@ -212,7 +212,6 @@ void LoginDialog::slot_tcp_con_finish(bool bsuccess)
     {
         showTip(tr("网络异常"),false);
         EnableBtn(true);
-
     }
 
 }
